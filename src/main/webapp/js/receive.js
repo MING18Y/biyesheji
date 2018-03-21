@@ -1,0 +1,1 @@
+var message = JSON.parse(event.data);//将数据解析成JSON形式
