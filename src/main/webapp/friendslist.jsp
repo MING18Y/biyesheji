@@ -66,7 +66,7 @@
 				
 
 				<!--容器 -->
-
+				<input type="button" value="button" onclick="send()"></input>
 
 			</div>
 		</div>
@@ -86,7 +86,7 @@
 
 	<!-- Custom script for this template -->
 	<script src="./js/friendslist.js" charset="utf-8"></script>
-	<script src="./js/websocket.js" charset="utf-8"></script>
+<!-- 	<script src="./js/websocket.js" charset="utf-8"></script> -->
 
 </body>
 </html>

@@ -28,16 +28,16 @@
 	<div class="container">
 		<form class="form-signin" action="chatWebsocket/login" method="post">
 	        <h2 class="form-signin-heading">请登录</h2>
-	        <label for="inputEmail" class="sr-only">Email address</label>
-	        <input type="text" id="username" class="form-control" placeholder="userId" required autofocus>
+	        <label for="userid" class="sr-only">User Id</label>
+	        <input type="text" id="userid" class="form-control" placeholder="USER ID" required autofocus>
 	        <label for="inputPassword" class="sr-only">Password</label>
-	        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+	        <input type="password" id="inputPassword" class="form-control" placeholder="PASSWORD" required>
 	        <div class="checkbox">
 	          <label>
 	            <input type="checkbox" value="remember-me"> Remember me
 	          </label>
 	        </div>
-	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">Sign in</button>
       </form>
 	</div>  
   
@@ -56,5 +56,7 @@
   	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<script src="./js/login.js" charset="utf-8"></script>
 </body>  
 </html> 

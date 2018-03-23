@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hisen.web.WebSocketTest;  
   
 @Controller  
-@RequestMapping("chatWebsocket")  
-public class ChartWebsocketController {  
-    @RequestMapping("login")  
-    public void login(String username,HttpServletRequest request,HttpServletResponse response) throws Exception{  
-        HttpSession session=request.getSession();  
-        session.setAttribute("username", username);  
-        WebSocketTest.setHttpSession(session);  
+@RequestMapping("login")  
+public class ChatWebsocketController {  
+    @RequestMapping("loginverify")  
+    public void loginverify(HttpServletRequest request,HttpServletResponse response) throws Exception{
+    	System.out.println(request);
+//        HttpSession session=request.getSession();  
+//        session.setAttribute("username", username);  
+//        WebSocketTest.setHttpSession(session);  
         request.getRequestDispatcher("/socketChat.jsp").forward(request, response);  
     }  
     @RequestMapping("loginOut")  

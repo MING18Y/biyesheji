@@ -1,4 +1,4 @@
-var webSocket = new WebSocket("ws://"+socketPath+"/ws");
+var webSocket = new WebSocket("ws://localhost:8080/Booksystem_V0");
 webSocket.onopen = function(event){
     console.log("连接成功");
     console.log(event);
