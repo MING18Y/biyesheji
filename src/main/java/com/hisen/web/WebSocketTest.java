@@ -23,10 +23,10 @@ import com.hisen.entity.MessageDto;
 public class WebSocketTest {  
     
     //存放所有登录用户的Map集合，键：每个用户的唯一标识（用户名）  
-    //private static Map<String,WebSocketTest> webSocketMap = new HashMap<String,WebSocketTest>();  
+    private static Map<String,WebSocketTest> webSocketMap = new HashMap<String,WebSocketTest>();  
     //session作为用户建立连接的唯一会话，可以用来区别每个用户  
     //httpsession用以在建立连接的时候获取登录用户的唯一标识（登录名）,获取到之后以键值对的方式存在Map对象里面  
-    //private static HttpSession httpSession;  
+    private static HttpSession httpSession;  
     
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -36,9 +36,9 @@ public class WebSocketTest {
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session; 
-	//    public static void setHttpSession(HttpSession httpSession){  
-	//        WebSocketTest.httpSession=httpSession;  
-	//    }  
+    public static void setHttpSession(HttpSession httpSession){  
+        WebSocketTest.httpSession=httpSession;  
+    }  
     /** 
      * 连接建立成功调用的方法 
      * @param session 
@@ -46,15 +46,15 @@ public class WebSocketTest {
      */  
     @OnOpen  
     public void onOpen(Session session) {  
-//        Gson gson=new Gson();  
+        Gson gson=new Gson();  
           this.session = session;  
-//        webSocketMap.put((String) httpSession.getAttribute("username"), this);  
-//        addOnlineCount(); //   
-//        MessageDto md=new MessageDto();  
-//        md.setMessageType("onlineCount");  
-//        md.setData(onlineCount+"");  
-//        sendOnlineCount(gson.toJson(md));  
-//        System.out.println(getOnlineCount());
+          webSocketMap.put((String) httpSession.getAttribute("userid"), this);  
+          addOnlineCount();  
+          MessageDto md=new MessageDto();  
+          md.setMessageType("onlineCount");  
+          md.setData(onlineCount+"");  
+          sendOnlineCount(gson.toJson(md));  
+    	  System.out.println(getOnlineCount());
           webSocketSet.add(this);
           addOnlineCount();
           System.out.println("=========================来自前端的websocket连接");
@@ -65,34 +65,31 @@ public class WebSocketTest {
      * 向所有在线用户发送在线人数 
      * @param message 
      */  
-//    public void sendOnlineCount(String message){  
-//        for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
-//            try {  
-//                entry.getValue().sendMessage(message);  
-//            } catch (IOException e) {  
-//                continue;  
-//            }  
-//        }  
-//    }  
+	    public void sendOnlineCount(String message){  
+	        for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
+	            try {  
+	                entry.getValue().sendMessage(message);  
+	            } catch (IOException e) {  
+	                continue;  
+	            }  
+	        }  
+	    }  
       
     /** 
      * 连接关闭调用的方法 
      */  
     @OnClose  
     public void onClose() {  
-//        for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
-//            if(entry.getValue().session==this.session){  
-//                webSocketMap.remove(entry.getKey());  
-//                break;  
-//            }  
-//        }  
-//        //webSocketMap.remove(httpSession.getAttribute("username"));  
-//        subOnlineCount(); //   
-//        System.out.println(getOnlineCount());  
-    	webSocketSet.remove(this);  //从set中删除
-        subOnlineCount();           //在线数减1
-        System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
-    }  
+        for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
+            if(entry.getValue().session==this.session){  
+                webSocketMap.remove(entry.getKey());  
+                break;  
+            }  
+        }  
+        //webSocketMap.remove(httpSession.getAttribute("username"));  
+        subOnlineCount(); //   
+        System.out.println(getOnlineCount());  
+    } 
   
     /** 
      * 服务器接收到客户端消息时调用的方法，（通过“@”截取接收用户的用户名） 
@@ -104,46 +101,35 @@ public class WebSocketTest {
      */  
     @OnMessage  
     public void onMessage(String message, Session session) {
-    	System.out.println("来自客户端的消息:" + message);
-        //群发消息
-        for(WebSocketTest item: webSocketSet){
-            try {
-                item.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-                continue;
-            }
-        }
-//        Gson gson=new Gson();  
-//        System.out.println("收到客户端的消息:" + message);  
-//        StringBuffer messageStr=new StringBuffer(message);  
-//        if(messageStr.indexOf("@")!=-1){  
-//            String targetname=messageStr.substring(0, messageStr.indexOf("@"));  
-//            String sourcename="";  
-//            for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
-//                //根据接收用户名遍历出接收对象  
-//                if(targetname.equals(entry.getKey())){  
-//                    try {  
-//                        for (Entry<String,WebSocketTest> entry1  : webSocketMap.entrySet()) {  
-//                            //session在这里作为客户端向服务器发送信息的会话，用来遍历出信息来源  
-//                            if(entry1.getValue().session==session){  
-//                                sourcename=entry1.getKey();  
-//                            }  
-//                        }  
-//                        MessageDto md=new MessageDto();  
-//                        md.setMessageType("message");  
-//                        md.setData(sourcename+":"+message.substring(messageStr.indexOf("@")+1));  
-//                        entry.getValue().sendMessage(gson.toJson(md));  
-//                    } catch (IOException e) {  
-//                        e.printStackTrace();  
-//                        continue;  
-//                    }  
-//                }  
-//                  
-//            }  
-//        }  
-//          
-//    
+    	 
+        Gson gson=new Gson();  
+        System.out.println("收到客户端的消息:" + message);  
+        StringBuffer messageStr=new StringBuffer(message);  
+        if(messageStr.indexOf("@")!=-1){  
+            String targetname=messageStr.substring(0, messageStr.indexOf("@"));  
+            String sourcename="";  
+            for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
+                //根据接收用户名遍历出接收对象  
+                if(targetname.equals(entry.getKey())){  
+                    try {  
+                        for (Entry<String,WebSocketTest> entry1  : webSocketMap.entrySet()) {  
+                            //session在这里作为客户端向服务器发送信息的会话，用来遍历出信息来源  
+                            if(entry1.getValue().session==session){  
+                                sourcename=entry1.getKey();  
+                            }  
+                        }  
+                        MessageDto md=new MessageDto();  
+                        md.setMessageType("message");  
+                        md.setData(sourcename+":"+message.substring(messageStr.indexOf("@")+1));  
+                        entry.getValue().sendMessage(gson.toJson(md));  
+                    } catch (IOException e) {  
+                        e.printStackTrace();  
+                        continue;  
+                    }  
+                }  
+                  
+            }  
+        }  
     }  
   
     /** 

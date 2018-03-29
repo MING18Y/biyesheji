@@ -26,18 +26,18 @@
   
 <body>
 	<div class="container">
-		<form class="form-signin" action="chatWebsocket/login" method="post">
+		<form class="form-signin" action="login/loginverify" method="post">
 	        <h2 class="form-signin-heading">请登录</h2>
 	        <label for="userid" class="sr-only">User Id</label>
-	        <input type="text" id="userid" class="form-control" placeholder="USER ID" required autofocus>
-	        <label for="inputPassword" class="sr-only">Password</label>
-	        <input type="password" id="inputPassword" class="form-control" placeholder="PASSWORD" required>
+	        <input type="text" id="userid" name="userid" class="form-control" placeholder="USER ID" required autofocus>
+	        <label for="userpassword" class="sr-only">Password</label>
+	        <input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="PASSWORD" required>
 	        <div class="checkbox">
 	          <label>
 	            <input type="checkbox" value="remember-me"> Remember me
 	          </label>
 	        </div>
-	        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">Sign in</button>
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
 	</div>  
   

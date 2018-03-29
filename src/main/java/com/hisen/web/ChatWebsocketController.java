@@ -13,12 +13,20 @@ import com.hisen.web.WebSocketTest;
 @RequestMapping("login")  
 public class ChatWebsocketController {  
     @RequestMapping("loginverify")  
-    public void loginverify(HttpServletRequest request,HttpServletResponse response) throws Exception{
-    	System.out.println(request);
+    public void loginverify(String userid,String userpassword,HttpServletRequest request,HttpServletResponse response) throws Exception{
+    	System.out.println(userid+"--userid"+userpassword+"--userpassword");
+    	HttpSession session = request.getSession();
+    	session.setAttribute("userid", userid);
+    	
+    	WebSocketTest.setHttpSession(session);
+    	request.getRequestDispatcher("/socketChat.jsp").forward(request, response);
+    		
+    	
+    	
 //        HttpSession session=request.getSession();  
 //        session.setAttribute("username", username);  
 //        WebSocketTest.setHttpSession(session);  
-        request.getRequestDispatcher("/socketChat.jsp").forward(request, response);  
+        //request.getRequestDispatcher("/friendslist.jsp").forward(request, response);  
     }  
     @RequestMapping("loginOut")  
     public void loginOut(HttpServletRequest request,HttpServletResponse response) throws Exception{  
