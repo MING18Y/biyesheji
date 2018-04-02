@@ -19,15 +19,18 @@ console.log("friendlist.js")
 var websocket = null;  
 let html = null;
 
+//获取当前登陆用户userid
+//var userid = $(session.userid)
+console.log(userid,"当前登陆userid为")
+
 //获取好友列表
-$.get("/Booksystem_V0/showfriend/friendslist",function(data,status){
+$.get("/BookSystem_V0/showfriend/friendslist",function(data,status){
 	
 	let html ="<li class=\"active\"><a href=\"#\">好友列表<span class=\"sr-only\">(current)</span></a></li>"
 	for(let i=0;i<data.length;i++){
 		fid =data[i].friendId
 		fname = data[i].friendName
 		html += '<li><a href=\"#\" onclick=\"chatWithxx('+ fid+',\''+fname +'\')\">'+data[i].friendName+'</a></li>'
-		
 	}
 	$("#friendslist").html(html)
 	console.log(data)
@@ -36,13 +39,13 @@ $.get("/Booksystem_V0/showfriend/friendslist",function(data,status){
 	
 })
 //装载聊天窗口
-html = $("#chatwindow").load("chatwindow.jsp",function(){
+html = $("#chatwindow").load("../chatwindow.jsp",function(){
 	console.log("load chatwindow successfully")
 })
 //初始化websocket连接
 //判断当前浏览器是否支持WebSocket  
 if ('WebSocket' in window) {  
-    websocket = new WebSocket("ws://localhost:8080/Booksystem_V0/websocketTest");  
+    websocket = new WebSocket("ws://localhost:8080/BookSystem_V0/websocketTest");  
     console.log("attempt to connect the server by using websocket")
 } else {  
     alert('当前浏览器 Not support websocket')  
@@ -77,7 +80,10 @@ window.onbeforeunload = function() {
     closeWebSocket();
     console.log("窗口即将关闭，执行后续函数。。。")
 }
-
+//关闭WebSocket连接  
+function closeWebSocket() {  
+    websocket.close();  
+}  
 function chatWithxx(va1,va2){
 	console.log("now chatting with friendId:"+va1);
 	$("#chatwindowtitle").html("与"+va2+"聊天");

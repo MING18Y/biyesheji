@@ -18,7 +18,7 @@
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="./css/dashboard.css" rel="stylesheet">
+<link href="../css/dashboard.css" rel="stylesheet">
 
 
 </head>
@@ -85,8 +85,19 @@
 		src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<!-- Custom script for this template -->
-	<script src="./js/friendslist.js" charset="utf-8"></script>
-<!-- 	<script src="./js/websocket.js" charset="utf-8"></script> -->
+	
+	<script  type="text/javascript">
+	//获取session域中的值	
+	var userid = '<%=session.getAttribute("userid")%>';
+	
+		
+	</script>
+	
+	
+	<script src="../js/friendslist.js" charset="utf-8"></script>
+	<!-- 	<script src="./js/websocket.js" charset="utf-8"></script> -->
+
+
 
 </body>
 </html>

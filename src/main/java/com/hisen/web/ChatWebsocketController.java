@@ -13,15 +13,17 @@ import com.hisen.web.WebSocketTest;
 @RequestMapping("login")  
 public class ChatWebsocketController {  
     @RequestMapping("loginverify")  
-    public void loginverify(String userid,String userpassword,HttpServletRequest request,HttpServletResponse response) throws Exception{
-    	System.out.println(userid+"--userid"+userpassword+"--userpassword");
+    public String loginverify(String userid,String userpassword,HttpServletRequest request,HttpServletResponse response) throws Exception{
+    	//System.out.println(userid+"--userid"+userpassword+"--userpassword");
+    	System.out.println(request.getParameter("userid")+"--userid"+request.getParameter("userpassword")+"--userpassword");
+    	
     	HttpSession session = request.getSession();
     	session.setAttribute("userid", userid);
     	
     	WebSocketTest.setHttpSession(session);
-    	request.getRequestDispatcher("/socketChat.jsp").forward(request, response);
+    	//request.getRequestDispatcher("/socketChat.jsp").forward(request, response);
     		
-    	
+    	return "friendslist";
     	
 //        HttpSession session=request.getSession();  
 //        session.setAttribute("username", username);  
@@ -29,9 +31,11 @@ public class ChatWebsocketController {
         //request.getRequestDispatcher("/friendslist.jsp").forward(request, response);  
     }  
     @RequestMapping("loginOut")  
-    public void loginOut(HttpServletRequest request,HttpServletResponse response) throws Exception{  
+    public String loginOut(HttpServletRequest request,HttpServletResponse response) throws Exception{  
         HttpSession session=request.getSession();  
-        session.removeAttribute("username");  
-        request.getRequestDispatcher("/socketChat.jsp").forward(request, response);  
+        session.removeAttribute("userid");  
+        //request.getRequestDispatcher("/socketChat.jsp").forward(request, response);  
+        
+        return "login";
     }  
 } 
