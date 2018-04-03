@@ -18,10 +18,16 @@
 console.log("friendlist.js")
 var websocket = null;  
 let html = null;
+//用于拼接聊天内容。在函数sendmessage,websocket.onmessage处调用
+let contenthtml  
 
 //获取当前登陆用户userid
 //var userid = $(session.userid)
-console.log(userid,"当前登陆userid为")
+console.log("当前登陆userid为",userid)
+
+//存储当前选择的聊天好友
+let friendid
+let friendname
 
 //获取好友列表
 $.get("/BookSystem_V0/showfriend/friendslist",function(data,status){
@@ -60,14 +66,20 @@ websocket.onopen = function() {
 }
 //接收到消息的回调方法  
 websocket.onmessage = function(event) {  
-//        debugger  
-//        var messageJson=eval("("+event.data+")");  
-//        if(messageJson.messageType=="message"){  
-//            setMessageInnerHTML(messageJson.data);  
-//        }  
-//        if(messageJson.messageType=="onlineCount"){  
-//            document.getElementById('onlineCount').innerHTML=messageJson.data;  
-//        }  
+     
+	
+    var messageJson=eval("("+event.data+")");  
+    if(messageJson.messageType=="message"){  
+//        setMessageInnerHTML(messageJson.data);
+    	
+        contenthtml = $("#chatwindowcontent").html();
+        console.log("messageJson:",messageJson)
+    	contenthtml += messageJson.data;
+        $("#chatwindowcontent").html(contenthtml+"</br>");
+    }  
+    if(messageJson.messageType=="onlineCount"){  
+        console.log("messageJson.data"+messageJson.data);  
+    }  
     console.log(event.data) 
     console.log("onmessage 接收到消息")
 }  
@@ -86,16 +98,20 @@ function closeWebSocket() {
 }  
 function chatWithxx(va1,va2){
 	console.log("now chatting with friendId:"+va1);
+	friendid = va1;
+	friendname = va2;
 	$("#chatwindowtitle").html("与"+va2+"聊天");
 	$("#chatwindowcontent").html("</br></br></br></br>");
 }
 function sendmessage(){
-	console.log("sending message:"+$("#chatwindowmessage").html())
-	let message = $("#chatwindowmessage").val()
-	websocket.send(message)
-	contenthtml = $("#chatwindowcontent").html()
-	contenthtml += message
-	$("#chatwindowcontent").html(contenthtml+"</br>")
-	console.log("message send to server done")
+	console.log("sending message:"+$("#chatwindowmessage").val());
+	
+	let message = $("#chatwindowmessage").val();
+	websocket.send(friendid+"@"+message);
+	contenthtml = $("#chatwindowcontent").html();
+	contenthtml += message;
+	$("#chatwindowcontent").html(contenthtml+"</br>");
+	
+	console.log("message send to server done");
 }
 

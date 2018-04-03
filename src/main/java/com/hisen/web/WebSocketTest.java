@@ -108,6 +108,7 @@ public class WebSocketTest {
         if(messageStr.indexOf("@")!=-1){  
             String targetname=messageStr.substring(0, messageStr.indexOf("@"));  
             String sourcename="";  
+            System.out.println("截取到@之后的目标接收用户userid是:"+targetname);
             for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
                 //根据接收用户名遍历出接收对象  
                 if(targetname.equals(entry.getKey())){  
@@ -116,17 +117,22 @@ public class WebSocketTest {
                             //session在这里作为客户端向服务器发送信息的会话，用来遍历出信息来源  
                             if(entry1.getValue().session==session){  
                                 sourcename=entry1.getKey();  
+                                System.out.println("检测到发送信息的用户是:"+sourcename);
                             }  
                         }  
                         MessageDto md=new MessageDto();  
                         md.setMessageType("message");  
                         md.setData(sourcename+":"+message.substring(messageStr.indexOf("@")+1));  
+                        System.out.println("at line 126,WebsocketTest.java md.setData:"+md.getData());
                         entry.getValue().sendMessage(gson.toJson(md));  
                     } catch (IOException e) {  
                         e.printStackTrace();  
                         continue;  
                     }  
-                }  
+                }
+                else {
+                	System.out.println("targetname not in session,target user perhaps not online.Please check");
+                }
                   
             }  
         }  
@@ -149,7 +155,8 @@ public class WebSocketTest {
      * @param message 
      * @throws IOException 
      */  
-    public void sendMessage(String message) throws IOException {  
+    public void sendMessage(String message) throws IOException { 
+    	System.out.println("now sending message:"+message);
         this.session.getBasicRemote().sendText(message);  
         // this.session.getAsyncRemote().sendText(message);  
     }  
