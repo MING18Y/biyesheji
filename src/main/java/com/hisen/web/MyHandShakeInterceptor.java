@@ -11,23 +11,23 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
- * websocketÎÕÊÖÀ¹½ØÆ÷
- * À¹½ØÎÕÊÖÇ°£¬ÎÕÊÖºóµÄÁ½¸öÇÐÃæ
+ * websocketï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Öºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 public class MyHandShakeInterceptor implements HandshakeInterceptor {
 
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
-        System.out.println("Websocket:ÓÃ»§[ID:" + ((ServletServerHttpRequest) serverHttpRequest).getServletRequest().getSession(false).getAttribute("user") + "]ÒÑ¾­½¨Á¢Á¬½Ó");
+        System.out.println("Websocket:ï¿½Ã»ï¿½[ID:" + ((ServletServerHttpRequest) serverHttpRequest).getServletRequest().getSession(false).getAttribute("user") + "]ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         if (serverHttpRequest instanceof ServletServerHttpRequest) {
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) serverHttpRequest;
             HttpSession session = servletRequest.getServletRequest().getSession(false);
-            // ±ê¼ÇÓÃ»§
+            // ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
             User user = (User) session.getAttribute("user");
             if(user!=null){
-                map.put("uid", user.getUserId());//Îª·þÎñÆ÷´´½¨WebSocketSession×ö×¼±¸
-                System.out.println("ÓÃ»§id£º"+user.getUserId()+" ±»¼ÓÈë");
+                map.put("uid", user.getUserid());//Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½WebSocketSessionï¿½ï¿½×¼ï¿½ï¿½
+                System.out.println("ï¿½Ã»ï¿½idï¿½ï¿½"+user.getUserid()+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             }else{
-                System.out.println("userÎª¿Õ");
+                System.out.println("userÎªï¿½ï¿½");
                 return false;
             }
         }

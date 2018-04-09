@@ -30,18 +30,19 @@ let friendid
 let friendname
 
 //获取好友列表
-$.get("/BookSystem_V0/showfriend/friendslist",function(data,status){
-	
+console.log("正在向服务器请求好友列表");
+$.post("/BookSystem_V0/showfriend/friendslist/"+userid,function(data,status){
+	console.log("data",data);
 	let html ="<li class=\"active\"><a href=\"#\">好友列表<span class=\"sr-only\">(current)</span></a></li>"
 	for(let i=0;i<data.length;i++){
-		fid =data[i].friendId
-		fname = data[i].friendName
-		html += '<li><a href=\"#\" onclick=\"chatWithxx('+ fid+',\''+fname +'\')\">'+data[i].friendName+'</a></li>'
+		fid =data[i].userid
+		fname = data[i].usernickname
+		html += '<li><a href=\"#\" onclick=\"chatWithxx('+ fid+',\''+fname +'\')\">'+data[i].usernickname+'</a></li>'
 	}
 	$("#friendslist").html(html)
 	console.log(data)
 	console.log("")
-	console.log("require friendslist:"+status)
+	console.log("请求好友列表:"+status)
 	
 })
 //装载聊天窗口

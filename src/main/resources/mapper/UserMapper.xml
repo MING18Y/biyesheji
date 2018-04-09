@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hisen.dao.UserDao">
+  <!-- 目的：为dao接口方法提供sql语句配置 -->
+  <select id="findUserByUseridandUserpassword" resultType="com.hisen.entity.User" parameterType="String">
+    <!-- 具体的sql -->
+    SELECT
+    userid,
+    userpassword
+    FROM
+    userinfo
+    WHERE
+    userid = #{0}
+    AND
+    userpassword = #{1}
+  </select>
+
+
+</mapper>

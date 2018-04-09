@@ -17,6 +17,13 @@
     ORDER BY friendid
     LIMIT #{offset}, #{limit}
   </select>
+  
+  <select id="getFriendListByUserid" resultType="User" parameterType="String">
+    SELECT *
+    FROM friends${userid}
+    
+    
+  </select>
 
   <update id="updateFriend" parameterType="Friend">
     UPDATE friends

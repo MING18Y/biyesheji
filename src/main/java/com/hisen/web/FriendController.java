@@ -1,6 +1,7 @@
 package com.hisen.web;
 
 import com.hisen.entity.Friend;
+import com.hisen.entity.User;
 import com.hisen.service.FriendService;
 
 import java.util.List;
@@ -30,11 +31,12 @@ public class FriendController {
 	// model.addAttribute("list", list);
 	// return "list";// WEB-INF/jsp/"list".jsp
 	// }
-	@RequestMapping(value = "/friendslist", method = RequestMethod.GET)
+	@RequestMapping(value = "/friendslist/{userid}", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Friend> showAllFriends() throws Exception {
-		List<Friend> friendlist = friendService.getList(0, 1000);
-
+	public List<User> showAllFriends(@PathVariable("userid")String userid) throws Exception {
+		System.out.println("正在请求userid为"+userid+"的好友列表");
+//		List<Friend> friendlist = friendService.getList(0, 1000);
+		List<User> friendlist = friendService.getFriendListByUserid(userid);
 		System.out.println(friendlist);
 		return friendlist;
 
