@@ -109,7 +109,9 @@ public class WebSocketTest {
             String targetname=messageStr.substring(0, messageStr.indexOf("@"));  
             String sourcename="";  
             System.out.println("截取到@之后的目标接收用户userid是:"+targetname);
-            for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
+            //ping心跳检测用，用来保持连接，如果targetname不是ping就执行常规收发消息的流程
+            
+        	for (Entry<String,WebSocketTest> entry  : webSocketMap.entrySet()) {  
                 //根据接收用户名遍历出接收对象  
                 if(targetname.equals(entry.getKey())){  
                     try {  
@@ -135,6 +137,7 @@ public class WebSocketTest {
                 }
                   
             }  
+            
         }  
     }  
   

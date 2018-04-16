@@ -13,13 +13,12 @@
 <title>Friends List</title>
 
 <!-- Bootstrap core CSS -->
-<link
-	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
-
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="../css/dashboard.css" rel="stylesheet">
-
+<link href="../css/friendlist.css" rel="stylesheet">
+<!-- css font awesome -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
 
 </head>
 
@@ -35,15 +34,13 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="./friendslist.jsp">Welcome to bysj
-					chatting room</a>
+				<a class="navbar-brand" href="./friendslist.jsp">Welcome to bysj chatting room</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Dashboard111</a></li>
-					<li><a href="#">Settings222</a></li>
-					<li><a href="#">Profile333</a></li>
-					<li><a href="#">Help444</a></li>
+					
+					<li><a href="#">Profile Setting</a></li>
+					
 				</ul>
 				<form class="navbar-form navbar-right">
 					<input type="text" class="form-control" placeholder="Search...">
@@ -89,7 +86,7 @@
 	<script  type="text/javascript">
 	//获取session域中的值	
 	var userid = '<%=session.getAttribute("userid")%>';
-	
+
 		
 	</script>
 	

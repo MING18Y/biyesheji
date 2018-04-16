@@ -16,6 +16,34 @@
     AND
     userpassword = #{1}
   </select>
+  
+  <select id="findUserByUserid" resultType="com.hisen.entity.User" parameterType="String">
+    <!-- 具体的sql -->
+    SELECT
+    userid
+    FROM
+    userinfo
+    WHERE
+    userid = #{0}
+  </select>
+  
+  <insert id="addUser">
+    INSERT INTO userinfo(`userid`,`userpassword`,`usernickname`,`useremail`,`usersignature`,`userheadimg`)
+    VALUES(#{userid}, #{userpassword},'', #{useremail},'','' )
+  </insert>
+  
+  <update id="createFriendsuseridTable">  
+       CREATE TABLE `friends${userid}` (  
+	  `userid` varchar(11) DEFAULT NULL,  
+	  `userpassword` varchar(24) DEFAULT NULL,  
+	  `usernickname` varchar(255) DEFAULT NULL,  
+	  `useremail` varchar(255) DEFAULT NULL,  
+	  `usersignature` varchar(255) DEFAULT NULL,  
+	  `userheadimg` varchar(255) DEFAULT NULL  
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;  
+   </update>  
+  
+  
 
 
 </mapper>
