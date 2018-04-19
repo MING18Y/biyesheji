@@ -28,6 +28,9 @@ $.post("/BookSystem_V0/showfriend/friendslist/"+userid,function(data,status){
 	friendAll = data;
 	let html ="<li class=\"active\"><a href=\"#\">好友列表<span class=\"sr-only\">(current)</span></a></li>"
 	for(let i=0;i<data.length;i++){
+		if(data[i].userid==null){
+			continue;
+		}
 		fid =data[i].userid
 		fname = data[i].usernickname
 		html += '<li id=\"friendlistid'+ fid +'\"> <a href=\"#\" onclick=\"chatWithxx('+ fid+',\''+fname +'\')\">'+data[i].usernickname+'</a></li>'

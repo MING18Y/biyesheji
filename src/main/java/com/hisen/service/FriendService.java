@@ -14,6 +14,9 @@ public interface FriendService {
   int addFriend(Friend friend);
   int updateFriend(Friend friend);
   int deleteFriendById(long id);
+  
+  String findFriendById(String friendid);
+  String addFriendById(String friendid, String userid);
 		
 
 }

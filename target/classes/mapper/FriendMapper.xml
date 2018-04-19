@@ -4,6 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hisen.dao.FriendDao">
   <!-- 目的：为dao接口方法提供sql语句配置 -->
+  <select id="findFriendById" resultType="User" parameterType="String">
+    <!-- 具体的sql -->
+    SELECT userid,usernickname
+    FROM userinfo
+    WHERE userid = #{friendid}
+  </select>
+  <select id="findFriendByIdAll" resultType="User" parameterType="String">
+    <!-- 具体的sql -->
+    SELECT *
+    FROM userinfo
+    WHERE userid = #{friendid}
+  </select>
+  <insert id="addFriendByFriendid">
+    INSERT INTO friends${userid1}(`userid`, `userpassword`, `usernickname`,`useremail`,`usersignature`,`userheadimg`)
+    VALUES(#{user.userid}, #{user.userpassword}, #{user.usernickname}, #{user.useremail}, #{user.usersignature},#{user.userheadimg})
+  </insert>
+  <select id="checkIfexists" resultType="int" parameterType="String">
+    <!-- 具体的sql -->
+    SELECT userid
+    FROM friends${userid1}
+    WHERE userid = #{friendid}
+  </select>
+  
+  
   <select id="queryById" resultType="Friend" parameterType="long">
     <!-- 具体的sql -->
     SELECT friendid,friendname,friendheadimg,friendsignature,friendemail

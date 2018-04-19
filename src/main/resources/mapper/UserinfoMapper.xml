@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hisen.dao.UserinfoDao">
+  <!-- 目的：为dao接口方法提供sql语句配置 -->
+  <select id="getUserinfoByUserid" resultType="com.hisen.entity.User" parameterType="String">
+    <!-- 具体的sql -->
+    SELECT
+    userid,
+    usernickname,
+    useremail,
+    usersignature
+    FROM
+    userinfo
+    WHERE
+    userid = #{userid}
+  </select>
+  <update id="updateUserinfoByUserid" parameterType="User">
+    UPDATE userinfo
+    SET usernickname = #{usernickname},
+    useremail = #{useremail},
+    usersignature = #{usersignature}
+    WHERE
+    userid = #{userid}
+  </update>
+  <select id="findAllFriendByUserid" resultType="String" parameterType="String">
+    <!-- 具体的sql -->
+    SELECT
+    userid
+    FROM friends${userid}
+  </select>
+  <update id="modifyFriendsTableByUseridFriendid">
+    UPDATE friends${friendiditerator}
+    SET usernickname = #{user.usernickname},
+    useremail = #{user.useremail},
+    usersignature = #{user.usersignature}
+    WHERE
+    userid = #{user.userid}
+  </update>
+
+</mapper>

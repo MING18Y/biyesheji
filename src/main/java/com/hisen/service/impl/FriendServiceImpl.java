@@ -12,6 +12,8 @@ import com.hisen.entity.Friend;
 import com.hisen.entity.User;
 import com.hisen.service.FriendService;
 
+import net.sf.json.JSONObject;
+
 @Service
 public class FriendServiceImpl implements FriendService {
 	
@@ -57,6 +59,44 @@ public class FriendServiceImpl implements FriendService {
 	public int deleteFriendById(long id) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String findFriendById(String friendid) {
+		// TODO Auto-generated method stub
+		JSONObject jsonobject ;
+		User result = friendDao.findFriendById(friendid);
+		
+		jsonobject= JSONObject.fromObject(result);
+		
+		return jsonobject.toString();
+			
+		
+	}
+
+	@Override
+	public String addFriendById(String friendid,String userid) {
+		// TODO Auto-generated method stub
+		//查找该friend的所有信息;
+		User user = friendDao.findFriendByIdAll(friendid); 
+		//确认是否已经在自己的好友列表中了；
+		List<User> checkresult = friendDao.checkIfexists(friendid,userid);
+		System.out.println("checkresult"+checkresult.size());
+		if(checkresult.size() == 0) {
+			int result = friendDao.addFriendByFriendid(user,userid);
+			if(result>=1) {
+				return "success";
+			}else {
+				return "failed";
+			}
+		}
+		else {
+			
+			return "alreadyExists";
+		}
+		//System.err.println("Warn:Need attention,method addFriendById:FriendService.java returned null ,it perhaps means this method didnt do anything,please check.");
+		//return null;
+
 	}
 
 	

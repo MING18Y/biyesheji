@@ -6,6 +6,9 @@ import com.hisen.service.FriendService;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,17 +52,24 @@ public class FriendController {
 		return "detail";
 	}
 
-	// @RequestMapping(value = "/add", method = RequestMethod.POST, produces =
-	// "text/plain;charset=UTF-8")
-	// @ResponseBody
-	// private String add(Book book) {
-	// Book hasBook = bookService.getById(book.getBookId());
-	// int i = -2;
-	// if (hasBook == null) {
-	// i = bookService.addBook(book);
-	// }
-	// return i > 0 ? "success" : "error";
-	// }
+	 @RequestMapping(value = "/findFriend", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	 @ResponseBody
+	 private String findFriend(HttpServletRequest request,HttpServletResponse reponse ,Model model) {
+		 //先查找好友是否存在
+		 String friendid = request.getParameter("useridfindFriend");
+		 
+	     return friendService.findFriendById(friendid);
+	 }
+	 @RequestMapping(value = "/addFriend", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	 @ResponseBody
+	 private String addFriend(HttpServletRequest request,HttpServletResponse reponse ,Model model) {
+		 
+		 String friendid = request.getParameter("founduserid");
+		 String userid = request.getParameter("userid");
+		 //确认好友是否已经在好友列表中。
+		 
+	     return friendService.addFriendById(friendid,userid);
+	 }
 	//
 	// @RequestMapping(value = "/del/{bookId}", method = RequestMethod.GET)
 	// @ResponseBody
